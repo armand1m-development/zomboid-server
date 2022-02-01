@@ -8,6 +8,7 @@ spec:
   strategy:
     type: Recreate
   selector:
+
     matchLabels:
       app: zomboid-server 
       version: v1
@@ -17,6 +18,8 @@ spec:
         app: zomboid-server 
         version: v1
     spec:
+      nodeSelector:
+        medium_workload: 'true'
       volumes:
       - name: zomboid-server-volume
         persistentVolumeClaim:
