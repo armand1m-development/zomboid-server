@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zomboid-server 
+  namespace: default
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: zomboid-server 
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: zomboid-server 
+        version: v1
+    spec:
+      volumes:
+      - name: zomboid-server-volume
+        persistentVolumeClaim:
+          claimName: zomboid-server-pv-claim-csi
+      containers:
+      - image: afey/zomboid:latest
+        imagePullPolicy: IfNotPresent
+        name: zomboid-server 
+        ports:
+        - containerPort: 8766
+          protocol: UDP
+        - containerPort: 8767
+          protocol: UDP
+        - containerPort: 16261
+          protocol: UDP
+        - containerPort: 16262
+        - containerPort: 27015
+        env:
+        - name: SERVER_PASSWORD 
+          valueFrom:
+            secretKeyRef:
+              name: zomboid-server-secrets
+              key: server_password 
+        - name: ADMIN_PASSWORD 
+          valueFrom:
+            secretKeyRef:
+              name: zomboid-server-secrets
+              key: admin_password
+        - name: SERVER_NAME
+          value: maconha 
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
+        volumeMounts:
+        - mountPath: /server-data
+          name: zomboid-server-volume
+          subPath: server-data
+        - mountPath: /server-files
+          name: zomboid-server-volume
+          subPath: server-files

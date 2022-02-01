@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: zomboid-server 
+  namespace: default
+spec:
+  hosts:
+  - zomboid.d1m.dev
+  - zomboid.armand1m.dev
+  gateways:
+  - ingressgateway-workload
+  udp: 
+  http:
+  - match:
+    - port: 8766
+    route:
+    - destination:
+        host: zomboid-server
+        number: 8766
+  - match:
+    - port: 8767
+    route:
+    - destination:
+        host: zomboid-server
+        number: 8767
+  - match:
+    - port: 16261 
+    route:
+    - destination:
+        host: zomboid-server
+        number: 16261 
+  - match:
+    - port: 16262 
+    route:
+    - destination:
+        host: zomboid-server
+        number: 16262 
+  - match:
+    - port: 27015 
+    route:
+    - destination:
+        host: zomboid-server
+        number: 27015 

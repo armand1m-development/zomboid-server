@@ -1,0 +1,13 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: zomboid-server-pv-claim-csi
+  labels:
+    app: zomboid-server 
+spec:
+  storageClassName: standard-rwo 
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi

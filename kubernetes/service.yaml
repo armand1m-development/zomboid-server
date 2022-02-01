@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zomboid-server
+  namespace: default
+  labels:
+    app: zomboid-server
+spec:
+  ports:
+  - name: steamport1
+    port: 8766
+    targetPort: 8766
+    protocol: UDP
+  - name: steamport2
+    port: 8767
+    targetPort: 8767
+    protocol: UDP
+  - name: gameserver 
+    port: 16261
+    targetPort: 16261
+    protocol: UDP
+  - name: clientslots
+    port: 16262
+    targetPort: 16262
+  - name: rcon
+    port: 27015
+    targetPort: 27015
+  selector:
+    app: zomboid-server
+
