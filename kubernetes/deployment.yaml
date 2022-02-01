@@ -18,6 +18,10 @@ spec:
         app: zomboid-server 
         version: v1
     spec:
+      tolerations:
+        - key: medium_workload 
+          value: 'true'
+          effect: NoExecute
       nodeSelector:
         medium_workload: 'true'
       volumes:
